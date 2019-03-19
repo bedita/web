@@ -191,25 +191,8 @@ module.exports = {
             // if dev mode don't use babel
             devMode ? {} : {
                 test: /\.js$/,
-                exclude: /(node_modules)/,
-                include: [
-                    path.resolve(__dirname, `webroot/modules`),
-                ],
+                exclude: /node_modules/,
                 loader: 'babel-loader',
-                options: {
-                    compact: false,
-                    presets: [
-                        ['@babel/preset-env', {
-                            modules: false,
-                            browsers: ['> 99%'],
-                            useBuiltIns: 'usage',
-                            // debug: true,
-                        }]
-                    ],
-                    plugins: [
-                        '@babel/plugin-syntax-dynamic-import',
-                    ],
-                }
             },
             {
                 test: /\.po$/,

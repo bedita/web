@@ -31,62 +31,49 @@ module.exports = {
     },
 
     externals: {
-        vue: 'node_modules/vue/dist/vue',
+        vue: 'vue/dist/vue',
     },
 
     resolve: {
         alias: aliases,
-
         extensions: ['.js', '.vue', '.json', '.scss', '.css'],
     },
 
     optimization: {
         minimize: true,
-    }
+    },
 
     module: {
         rules: [
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                include: [
-                    path.resolve(__dirname, `${BUNDLE.beditaPluginsRoot}/[name]/node_modules`),
-                ],
+                exclude: /node_modules/,
                 options: {
-                    compact: false,
                     presets: [
                         ['@babel/preset-env', {
-                            modules: false,
-                            browsers: ['> 99%'],
-                            useBuiltIns: "usage",
+                            modules: 'commonjs',
+                            targets: {
+                                browsers: ['> 0.25%'],
+                            },
+                            useBuiltIns: false,
                         }]
-                    ]
+                    ],
+                    plugins: [
+                        [
+                            '@babel/plugin-transform-runtime',
+                            {
+                                absoluteRuntime: false,
+                                corejs: 2,
+                                helpers: true,
+                                regenerator: true,
+                                useESModules: false
+                            }
+                        ],
+                        'syntax-dynamic-import'
+                    ],
                 }
             },
-            // {
-            //     test: /\.(css|scss)$/,
-            //     include: [
-            //         path.resolve(__dirname, `${BUNDLE.beditaPluginsRoot}/OpenCorporation/${BUNDLE.templateRoot}/Layout`),
-            //     ],
-            //     use: extractSass.extract({
-            //         fallback: 'style-loader',
-            //         use: [
-            //             {
-            //                 loader: 'css-loader',
-            //                 options: {
-            //                     minimize: !devMode,
-            //                     sourceMap: devMode,
-            //                 }
-            //             },
-            //             {
-            //                 loader: 'sass-loader',
-            //                 options: {
-            //                     sourceMap: devMode
-            //                 }
-            //             }
-            //         ],
-            //     }),
-            // },
         ]
     },
     devtool: devMode ? "source-map" : false,
