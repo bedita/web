@@ -14,6 +14,7 @@ namespace App\Controller\Model;
 
 use BEdita\SDK\BEditaClientException;
 use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Response;
 use Psr\Log\LogLevel;
 
 /**
@@ -43,9 +44,9 @@ class PropertyTypesController extends ModelBaseController
     /**
      * Save property types (includes: add/edit/delete)
      *
-     * @return void
+     * @return null
      */
-    public function save(): void
+    public function save(): ?Response
     {
         $payload = $this->request->getData();
 
@@ -79,11 +80,13 @@ class PropertyTypesController extends ModelBaseController
                 '_serialize' => ['error'],
             ]);
 
-            return;
+            return null;
         }
 
         $this->set((array)$response);
         $this->set('_serialize', true);
+
+        return null;
     }
 
     /**

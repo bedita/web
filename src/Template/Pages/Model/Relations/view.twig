@@ -34,10 +34,7 @@
         {# {% do _view.append('module-buttons', Form.postButton(__('Delete'), {'_name': 'model:delete', 'resource_type': resourceType}, {'data': {'id': resource.id}})) %} #}
     </div>
 
-    {# commands links to append in left side bar (commands menu) #}
-    {% do _view.append('module-links', Html.link(__('Object types'), {'_name': 'model:list:object_types'})|raw) %}
-    {% do _view.append('module-links', Html.link(__('Relations'), {'_name': 'model:list:relations'})|raw) %}
-    {% do _view.append('module-links', Html.link(__('Property types'), {'_name': 'model:list:property_types'})|raw) %}
+    {% element 'Model/sidebar_links' %}
 
 </div>
 </modules-view>

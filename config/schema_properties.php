@@ -187,5 +187,42 @@ return [
                 'description' => 'Property params, JSON Schema format',
             ],
         ],
+
+        // model/categories
+        'categories' => [
+            'id' => [
+                'type' => 'integer',
+                '$id' => '/properties/id',
+                'title' => 'Id',
+                'description' => '',
+                'readOnly' => true,
+            ],
+            'name' => [
+                'type' => 'string',
+                '$id' => '/properties/name',
+                'title' => 'Name',
+                'description' => 'Category name',
+            ],
+            'label' => [
+                'type' => 'string',
+                '$id' => '/properties/label',
+                'title' => 'Label',
+                'description' => 'Category label',
+            ],
+            'enabled' => [
+                'type' => 'boolean',
+                '$id' => '/properties/enabled',
+                'title' => 'Enabled',
+                'description' => '',
+                'default' => true,
+            ],
+            'type' => [
+                'type' => 'string',
+                '$id' => '/properties/enabled',
+                'title' => 'Type',
+                'description' => '',
+                'enum' => [],
+            ],
+        ],
     ],
 ];

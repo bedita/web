@@ -17,7 +17,7 @@ use BEdita\SDK\BEditaClientException;
 use Cake\Event\Event;
 use Cake\Http\Exception\UnauthorizedException;
 use Cake\Http\Response;
-use Psr\Log\LogLevel;
+use Cake\Utility\Hash;
 
 /**
  * Model base controller class
@@ -32,6 +32,13 @@ abstract class ModelBaseController extends AppController
      * @var string
      */
     protected $resourceType = null;
+
+    /**
+     * Single resource view existence flag.
+     *
+     * @var bool
+     */
+    protected $singleView = true;
 
     /**
      * {@inheritDoc}
@@ -50,16 +57,22 @@ abstract class ModelBaseController extends AppController
 
     /**
      * Restrict `model` module access to `admin` for now
+     *
      * {@inheritDoc}
      */
     public function beforeFilter(Event $event): ?Response
     {
+        $res = parent::beforeFilter($event);
+        if ($res !== null) {
+            return $res;
+        }
+
         $roles = $this->Auth->user('roles');
         if (empty($roles) || !in_array('admin', $roles)) {
             throw new UnauthorizedException(__('Module access not authorized'));
         }
 
-        return parent::beforeFilter($event);
+        return null;
     }
 
     /**
@@ -78,7 +91,7 @@ abstract class ModelBaseController extends AppController
                 $query
             );
         } catch (BEditaClientException $e) {
-            $this->log($e, LogLevel::ERROR);
+            $this->log($e, 'error');
             $this->Flash->error($e->getMessage(), ['params' => $e]);
 
             return $this->redirect(['_name' => 'dashboard']);
@@ -89,6 +102,7 @@ abstract class ModelBaseController extends AppController
         $this->set('links', (array)$response['links']);
         $this->set('schema', $this->Schema->getSchema());
         $this->set('properties', $this->Properties->indexList($this->resourceType));
+        $this->set('filter', $this->Properties->filterList($this->resourceType));
 
         return null;
     }
@@ -102,12 +116,10 @@ abstract class ModelBaseController extends AppController
      */
     public function view($id): ?Response
     {
-        $this->request->allowMethod(['get']);
-
         try {
             $response = $this->apiClient->get(sprintf('/model/%s/%s', $this->resourceType, $id));
         } catch (BEditaClientException $e) {
-            $this->log($e, LogLevel::ERROR);
+            $this->log($e, 'error');
             $this->Flash->error($e->getMessage(), ['params' => $e]);
 
             return $this->redirect(['_name' => 'model:list:' . $this->resourceType]);
@@ -122,12 +134,74 @@ abstract class ModelBaseController extends AppController
     }
 
     /**
+     * Save resource.
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function save(): ?Response
+    {
+        $data = $this->request->getData();
+        $id = Hash::get($data, 'id');
+        unset($data['id']);
+        $body = [
+            'data' => [
+                'type' => $this->resourceType,
+                'attributes' => $data,
+            ],
+        ];
+        $endpoint = sprintf('/model/%s', $this->resourceType);
+
+        try {
+            if (empty($id)) {
+                $response = $this->apiClient->post($endpoint, json_encode($body));
+                $id = Hash::get($response, '$data.id');
+            } else {
+                $body['data']['id'] = $id;
+                $this->apiClient->patch(sprintf('%s/%s', $endpoint, $id), json_encode($body));
+            }
+        } catch (BEditaClientException $e) {
+            $this->log($e, 'error');
+            $this->Flash->error($e->getMessage(), ['params' => $e]);
+        }
+
+        if (!$this->singleView) {
+            return $this->redirect(['_name' => 'model:list:' . $this->resourceType]);
+        }
+
+        return $this->redirect(
+            [
+                '_name' => 'model:view:' . $this->resourceType,
+                'id' => $id,
+            ]
+        );
+    }
+
+    /**
+     * Remove single resource.
+     *
+     * @param string $id Resource ID.
+     *
+     * @return \Cake\Http\Response
+     */
+    public function remove(string $id): Response
+    {
+        try {
+            $this->apiClient->delete(sprintf('/model/%s/%s', $this->resourceType, $id));
+        } catch (BEditaClientException $e) {
+            $this->log($e, 'error');
+            $this->Flash->error($e->getMessage(), ['params' => $e]);
+        }
+
+        return $this->redirect(['_name' => 'model:list:' . $this->resourceType]);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function beforeRender(Event $event): ?Response
     {
         $this->set('resourceType', $this->resourceType);
-        $this->set('moduleLink', ['_name' => 'model:list:object_types']);
+        $this->set('moduleLink', ['_name' => 'model:list:' . $this->resourceType]);
 
         return parent::beforeRender($event);
     }

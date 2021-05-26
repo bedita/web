@@ -355,6 +355,7 @@ class SchemaComponent extends Component
      *          and all concrete descendant types list as value
      *  * `uploadable` - list of concrete types having "Streams" associated,
      *          types that can be instantiated via file upload (like images, files)
+     *  * `categorized` - list of concrete types having "Categories" associated
      *
      * @return array
      */
@@ -371,7 +372,7 @@ class SchemaComponent extends Component
         $descendants = array_filter(array_unique($descendants));
         $types = Hash::combine($response, 'data.{n}.attributes.name', 'data.{n}.attributes');
         $descendants = array_fill_keys($descendants, []);
-        $uploadable = [];
+        $uploadable = $categorized = [];
         foreach ($types as $name => $data) {
             $abstract = (bool)Hash::get($data, 'is_abstract');
             if ($abstract) {
@@ -384,10 +385,15 @@ class SchemaComponent extends Component
                 if (in_array('Streams', $assoc)) {
                     $uploadable[] = $name;
                 }
+                if (in_array('Categories', $assoc)) {
+                    $categorized[] = $name;
+                }
             }
         }
+        sort($categorized);
+        sort($uploadable);
 
-        return compact('descendants', 'uploadable');
+        return compact('descendants', 'uploadable', 'categorized');
     }
 
     /**

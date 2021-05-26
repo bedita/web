@@ -1,0 +1,136 @@
+{% do _view.assign('title', 'Model ' ~ resourceType|humanize) %}
+{% do _view.assign('bodyViewClass',  'view-module view-model') %}
+
+<div class="module-header">
+    <header>
+        <h1>{{ title }}</h1>
+    </header>
+</div>
+
+{% element 'Modules/index_header' %}
+
+<div class="module-index">
+    <div class="list-objects">
+
+        {% if categorized %}
+
+            {# list resources : table header #}
+            <nav class="table-header has-border-black">
+                {% for prop in properties %}
+                    {% set label = prop %}
+                    {% if prop == 'object_type_name' %}
+                        {% set label = 'type' %}
+                    {% endif %}
+                    <div class="{{ Link.sortClass(prop) }}"><a href="{{ Link.sortUrl(prop) }}">{{ __(label)|humanize }}</a></div>
+                {% endfor %}
+                <div class="narrow"><a href="{{ Link.sortUrl('id') }}">{{ __('id') }}</a></div>
+                <div></div>
+            </nav>
+
+            {# Create new category #}
+            {{ Form.create(null, {
+                'id': 'form-create',
+                'url': {'_name': 'model:save:' ~ resourceType},
+                'class': 'table-row',
+            })|raw }}
+
+            {% for prop in properties %}
+
+            <div class="{{ prop }}-cell">
+                {% if prop == 'object_type_name' %}
+
+                    {{ Form.select('object_type_name', categorized)|raw }}
+
+                {% elseif prop == 'name' or prop == 'label' %}
+                    {{ Form.text(prop, {
+                        'type': 'text',
+                        'autocomplete': 'off',
+                        'autocorrect': 'off',
+                        'autocapitalize': 'off',
+                    }) | raw }}
+
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="narrow"></div>
+            <div class="buttons-cell narrow">
+                {% set buttonClasses = 'button button-text-white is-width-auto' %}
+                <button
+                    title="{{ __('Create') }} {{ resource.attributes.name }}"
+                    class="{{ buttonClasses }}">{{ __('Create') }}</button>
+            </div>
+
+            {{ Form.end()|raw }}
+
+            {# list resources : rows #}
+            {% for resource in resources %}
+
+                {{ Form.create(null, {
+                    'url': {'_name': 'model:save:' ~ resourceType},
+                    'id': 'form-' ~ resource.id,
+                    'class': 'table-row',
+                })|raw }}
+
+                    {% for prop in properties %}
+                        {% set propVal = resource.attributes[prop] %}
+
+                        <div class="{{ prop }}-cell" untitled-label="{{ __('Untitled') }}">
+                            {% if prop == 'object_type_name' %}
+                                <span class="tag has-background-module-{{ propVal }}">{{ propVal }}</span>
+
+                            {% elseif prop == 'name' or prop == 'label' %}
+
+                                {{ Form.text(prop, {
+                                    'type': 'text',
+                                    'autocomplete': 'off',
+                                    'autocorrect': 'off',
+                                    'autocapitalize': 'off',
+                                    'value': propVal,
+                                }) | raw }}
+
+                            {% elseif prop == 'enabled' %}
+
+                                {{ Form.checkbox(prop, {
+                                    'checked': propVal,
+                                })|raw }}
+
+                            {% else %}
+                                {{ Schema.format(propVal, schema.properties[prop]) }}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="narrow"> {{ resource.id }}</div>
+                    {{ Form.hidden('id', {'value': resource.id})|raw }}
+                {{ Form.end()|raw }}
+
+                    <div class="buttons-cell narrow">
+                        {% set buttonClasses = 'button button-text-white is-width-auto' %}
+
+                        {{ Form.button( __('Save'),
+                            {
+                                'form': 'form-' ~ resource.id,
+                                'title': __('Save') ~ resource.attributes.name,
+                                'class': buttonClasses,
+                            })|raw }}
+
+                        {{ Form.postButton(__('Remove'),
+                            {'_name': 'model:remove:' ~ resource.type, 'id': resource.id},
+                            {
+                                'title': __('Remove') ~ resource.attributes.name,
+                                'class': buttonClasses,
+                            })|raw }}
+                    </div>
+
+            {% endfor %}
+
+        {% else %}
+
+        <p>{{ __('Categories not available') }}</p>
+
+        {% endif %}
+
+    </div>
+
+    {% element 'Model/sidebar_links' %}
+
+</div> {# end module-content #}

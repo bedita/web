@@ -17,7 +17,7 @@
             <nav class="table-header has-border-black">
                 <div class="narrow"><a href="{{ Link.sortUrl('id') }}">{{ __('id') }}</a></div>
                 {% for prop in properties %}
-                    <div class="{{ Link.sortClass(prop) }}"><a href="{{ Link.sortUrl(prop) }}">{{ __(prop) }}</a></div>
+                    <div class="{{ Link.sortClass(prop) }}"><a href="{{ Link.sortUrl(prop) }}">{{ __(prop)|humanize }}</a></div>
                 {% endfor %}
                 <div></div>
             </nav>
@@ -76,9 +76,6 @@
     </div>
     {# end list-objects #}
 
-    {# append links to sidebar #}
-    {% do _view.append('module-links', Html.link(__('Object types'), {'_name': 'model:list:object_types'}, { 'class': 'icon-th-2' })|raw) %}
-    {% do _view.append('module-links', Html.link(__('Relations'), {'_name': 'model:list:relations'}, { 'class': 'icon-resize-full' })|raw) %}
-    {% do _view.append('module-links', Html.link(__('Properties'), {'_name': 'model:list:property_types'}, { 'class': 'icon-tasks' })|raw) %}
+    {% element 'Model/sidebar_links' %}
 
 </div> {# end module-index #}
