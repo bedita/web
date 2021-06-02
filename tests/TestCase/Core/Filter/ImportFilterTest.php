@@ -15,7 +15,6 @@ namespace App\Test\TestCase\Core\Filter;
 
 use App\Core\Filter\ImportFilter;
 use App\Core\Result\ImportResult;
-use BEdita\SDK\BEditaClient;
 use BEdita\WebTools\ApiClientProvider;
 use Cake\TestSuite\TestCase;
 
@@ -79,19 +78,27 @@ class MyDummyImportFilter extends DummyImportFilter
  */
 class ImportFilterTest extends TestCase
 {
-    /**
-     * The async Job ID (mock)
-     *
-     * @var string
-     */
-    protected $asyncJobId = 'apvsGena5lx#12kxjfasd';
 
     /**
-     * The stream ID (mock)
+     * Test client class
      *
-     * @var integer
+     * @var \BEdita\SDK\BEditaClient
      */
-    protected $streamId = 99999;
+    private $client = null;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $user = getenv('BEDITA_ADMIN_USR');
+        $pass = getenv('BEDITA_ADMIN_PWD');
+        $this->client = ApiClientProvider::getApiClient();
+        $response = $this->client->authenticate($user, $pass);
+        $this->client->setupTokens($response['meta']);
+    }
 
     /**
      * Data provider for `testCreateAsyncJob()`
@@ -102,18 +109,19 @@ class ImportFilterTest extends TestCase
     {
         $result = new ImportResult();
         $filename = 'import.csv';
-        $result->addMessage('info', (string)__('Job {0} to import file "{1}" scheduled.', $this->asyncJobId, $filename)); // almost the same info set by ImportFilter on createAsyncJob
+        $asyncJobId = '?'; // not possible to get it... ignoring
+        $result->addMessage('info', (string)__('Job {0} to import file "{1}" scheduled.', $asyncJobId, $filename)); // almost the same info set by ImportFilter on createAsyncJob
 
         return [
             'logic exception: service name not defined' => [
-                'App\Test\TestCase\Core\Filter\DummyImportFilter',
+                new DummyImportFilter(),
                 '',
                 '',
                 [],
                 new \LogicException('Cannot create async job without service name defined.'),
             ],
             'job to import file scheduled' => [
-                'App\Test\TestCase\Core\Filter\MyDummyImportFilter',
+                new MyDummyImportFilter(),
                 $filename,
                 sprintf('%s/tests/files/%s', getcwd(), $filename),
                 [],
@@ -125,7 +133,7 @@ class ImportFilterTest extends TestCase
     /**
      * Test create async job
      *
-     * @param string $filterClassName The import filter class name
+     * @param \App\Core\Filter\ImportFilter $importFilter The import filter
      * @param string $filename The file name
      * @param string $filepath The file path
      * @param array $options The async job options
@@ -135,39 +143,15 @@ class ImportFilterTest extends TestCase
      * @dataProvider createAsyncJobProvider
      * @covers ::createAsyncJob()
      */
-    public function testCreateAsyncJob($filterClassName, $filename, $filepath, $options, $expected)
+    public function testCreateAsyncJob($importFilter, $filename, $filepath, $options, $expected)
     {
         if ($expected instanceof \LogicException) {
             $this->expectException(get_class($expected));
             $this->expectExceptionCode($expected->getCode());
             $this->expectExceptionMessage($expected->getMessage());
         }
-        $apiClient = $this->getMockBuilder(BEditaClient::class)
-            ->setConstructorArgs(['https://media.example.com'])
-            ->getMock();
-
-        // mock upload
-        $apiClient->method('upload')
-            ->willReturn([
-                'data' => [
-                    'id' => $this->streamId, // stream ID
-                ],
-            ]);
-
-        // mock post /admin/async_jobs
-        $apiClient->method('post')
-            ->with('/admin/async_jobs')
-            ->willReturn([
-                'data' => [
-                    'id' => $this->asyncJobId,
-                ],
-            ]);
-
-        ApiClientProvider::setApiClient($apiClient);
-
-        // create filter and call createAsyncJob
-        $importFilter = new $filterClassName();
         $actual = $importFilter->createAsyncJob($filename, $filepath, $options);
-        static::assertEquals($expected, $actual);
+        static::assertEquals(get_class($expected), get_class($actual));
+        static::assertNotEmpty($actual->info);
     }
 }
