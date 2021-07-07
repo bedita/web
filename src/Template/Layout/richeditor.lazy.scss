@@ -1,10 +1,12 @@
 /*
+
 ██████╗ ███████╗██████╗ ██╗████████╗ █████╗     ██╗  ██╗
 ██╔══██╗██╔════╝██╔══██╗██║╚══██╔══╝██╔══██╗    ██║  ██║
 ██████╔╝█████╗  ██║  ██║██║   ██║   ███████║    ███████║
 ██╔══██╗██╔══╝  ██║  ██║██║   ██║   ██╔══██║    ╚════██║
 ██████╔╝███████╗██████╔╝██║   ██║   ██║  ██║         ██║
 ╚═════╝ ╚══════╝╚═════╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝         ╚═╝
+
 BEdita 4 ~ @ 2018 from ChannelWeb & Chialab with love
 */
 @import './styles/variables';   // common variables used for color, margins, typography, media breakpoints, tag collections
@@ -22,6 +24,40 @@ body {
     font-family: $font-family-monospace;
     font-size: $font-size-base;
     font-weight: $font-weight-base;
+}
+
+[data-placeholder] {
+    &[data-mce-selected] {
+        outline: solid 2px $info;
+    }
+}
+
+span[data-placeholder] {
+    display: inline-flex;
+    align-self: center;
+    margin: 0.5em;
+    padding: 0.25em;
+    border: solid 1px currentColor;
+
+    img {
+        width: 3em;
+        height: 3em;
+        object-fit: cover;
+        object-position: center;
+        -webkit-user-drag: none;
+    }
+}
+
+div[data-placeholder] {
+    display: flex;
+    margin: 0.5em 0;
+    padding: 0.25em;
+    border: solid 1px currentColor;
+
+    img {
+        width: 100%;
+        height: auto;
+    }
 }
 
 .mce-offscreen-selection {

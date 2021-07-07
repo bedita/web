@@ -2,13 +2,13 @@
     :relation-data='{{ relationSchema|json_encode|raw }}'
     :data-list=dataList
     relation-name={{ relationName }}
+    :readonly={{ readonly ? 'true' : 'false' }}
     :pre-count={{ preCount }}
     config-paginate-sizes={{ config('Pagination.sizeAvailable')|json_encode()|raw }}
     ref="relation"
     @loading="onToggleLoading" @count="onCount">
 
     <div class="relation-view">
-
         {# Lookup in properties configuration if a custom element for this relation is set
            in `Properties.{moduleName}.relations._element.{relationName}`.
            Then load custom element or use default relation view #}
@@ -55,69 +55,71 @@
                         {% if relationName == 'children' %}
                             {% element 'Form/related_item' { 'children': true  } %}
                         {% else %}
-                            {% element 'Form/related_item' { 'common': true } %}
+                            {% element 'Form/related_item' { 'common': true, 'readonly': readonly } %}
                         {% endif %}
                     </div>
 
-                    {# STAGED OBJECTS (new relations) #}
-                    <div v-if="addedRelations.length"
-                        class="related-item-column column added is-3 is-one-half-mobile is-one-third-tablet is-one-quarter-desktop is-one-fifth-widescreen is-one-sixth-fullhd"
-                        v-for="related in addedRelations"
-                        :key="related.id">
+                    {% if not readonly %}
+                        {# STAGED OBJECTS (new relations) #}
+                        <div v-if="addedRelations.length"
+                            class="related-item-column column added is-3 is-one-half-mobile is-one-third-tablet is-one-quarter-desktop is-one-fifth-widescreen is-one-sixth-fullhd"
+                            v-for="related in addedRelations"
+                            :key="related.id">
 
-                        {% element 'Form/related_item' { 'stage': true } %}
-                    </div>
+                            {% element 'Form/related_item' { 'stage': true } %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
-        </div>
+            {% if Perms.canSave() and not readonly %}
+                <div class="mt-5">
+                    {# DROP FILES #}
+                    {% if uploadableNum %}
+                        {# :accepted-drop="[`.from-relation-${relationName}`,isRelationWithMedia && 'from-files']"> #}
+.
+                        <drop-upload
+                            placeholder="{{ __('Click or drop new files here') }}"
+                            @new-relations="appendRelations"
+                            ></drop-upload>
+                    {% endif %}
+                </div>
 
-        {% if Perms.canSave() %}
-        <div class="mt-5">
-            {# DROP FILES #}
-            {% if uploadableNum %}
-                {# :accepted-drop="[`.from-relation-${relationName}`,isRelationWithMedia && 'from-files']"> #}
+                <div>
+                    <button v-if="isPanelOpen({{object.id|json_encode}})" class="icon-coffee"
+                        @click.prevent.stop="closePanel()">{{ __('cancel') }}</button>
 
-                <drop-upload
-                    placeholder="{{ __('Click or drop new files here') }}"
-                    @new-relations="appendRelations"
-                    ></drop-upload>
+                    <button v-else
+                        class="icon-hdd"
+                        @click.prevent.stop="addRelatedObjects({
+                            object: {{object|json_encode}},
+                            relationName: relationName,
+                            alreadyInView: alreadyInView,
+                            relationTypes: relationTypes,
+                        })">{{ __('add objects') }}</button>
+                </div>
             {% endif %}
-
-            <div>
-                <button v-if="isPanelOpen({{object.id|json_encode}})" class="icon-coffee"
-                    @click.prevent.stop="closePanel()">{{ __('cancel') }}</button>
-
-                <button v-else
-                    class="icon-hdd"
-                    @click.prevent.stop="addRelatedObjects({
-                        object: {{object|json_encode}},
-                        relationName: relationName,
-                        alreadyInView: alreadyInView,
-                        relationTypes: relationTypes,
-                    })">{{ __('add objects') }}</button>
-            </div>
         </div>
-        {% endif %} {# Perms #}
 
         {# End relation custom or default view #}
         {% endif %}
 
-        {# hidden field - relations serialized json #}
-        {{ Form.control(relationName ~ 'removeRelated', {
-            'type': 'hidden',
-            'name': 'relations[' ~ relationName ~ '][removeRelated]',
-            'v-model': 'removedRelationsData'
-        })|raw }}
-        {{ Form.unlockField('relations.' ~ relationName ~ '.removeRelated')}}
+        {% if not readonly %}
+            {# hidden field - relations serialized json #}
+            {{ Form.control(relationName ~ 'removeRelated', {
+                'type': 'hidden',
+                'name': 'relations[' ~ relationName ~ '][removeRelated]',
+                'v-model': 'removedRelationsData'
+            })|raw }}
+            {{ Form.unlockField('relations.' ~ relationName ~ '.removeRelated')}}
 
-        {# Relations serialized json form element #}
-        {{ Form.control(relationName ~ 'addRelated', {
-            'type': 'hidden',
-            'name': 'relations[' ~ relationName ~ '][addRelated]',
-            'v-model': 'addedRelationsData'
-        })|raw }}
-        {{ Form.unlockField('relations.' ~ relationName ~ '.addRelated')}}
-
+            {# Relations serialized json form element #}
+            {{ Form.control(relationName ~ 'addRelated', {
+                'type': 'hidden',
+                'name': 'relations[' ~ relationName ~ '][addRelated]',
+                'v-model': 'addedRelationsData'
+            })|raw }}
+            {{ Form.unlockField('relations.' ~ relationName ~ '.addRelated')}}
+        {% endif %}
     </div>
 </relation-view>

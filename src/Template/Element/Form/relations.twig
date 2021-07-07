@@ -30,6 +30,7 @@
                         'relationName': relationName,
                         'relationSchema': relationsSchema[relationName],
                         'dataList': dataList,
+                        'readonly': relationName in ['placeholder', 'placeholded'],
                         'preCount': preCount,
                         'uploadableNum': uploadableNum,
                     } %}

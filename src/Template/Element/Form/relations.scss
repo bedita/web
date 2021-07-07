@@ -184,7 +184,8 @@
         }
 
         footer {
-            a:last-child {
+            a:last-child:not(:only-child) {
+                margin-right: 0;
                 margin-left: auto;
             }
         }

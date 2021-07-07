@@ -57,6 +57,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        readonly: {
+            type: Boolean,
+            default: false,
+        },
         preCount: {
             type: Number,
             default: -1,

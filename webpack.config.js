@@ -247,6 +247,7 @@ module.exports = {
             },
             {
                 test: /\.(scss|css)$/,
+                exclude: /\.lazy\.(scss|css)$/,
                 include: [
                     path.resolve(__dirname, BUNDLE.templateRoot),
                 ],
@@ -260,14 +261,14 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             sourceMap: devMode,
-                        }
+                        },
                     },
                     {
                         loader: 'sass-loader',
                         options: {
                             sourceMap: devMode,
-                        }
-                    }
+                        },
+                    },
                 ]
             },
             {

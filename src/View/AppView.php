@@ -36,8 +36,10 @@ class AppView extends TwigView
                 'hiddenBlock' => '{{content}}',
                 'submitContainer' => '{{content}}',
                 'inputContainer' => '<div class="input {{type}}{{required}} {{containerClass}}">{{content}}</div>',
+                'richtext' => '<div name="{{name}}" contenteditable{{attrs}}>{{value}}</div>',
             ],
         ]);
+        $this->Form->addWidget('richtext', ['Richtextarea']);
         $this->loadHelper('Layout');
         $this->loadHelper('Array');
         $this->loadHelper('Html');
