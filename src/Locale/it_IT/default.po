@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BEdita 4 \n"
-"POT-Creation-Date: 2021-01-21 16:33:19 \n"
+"POT-Creation-Date: 2021-07-16 07:10:30 \n"
 "PO-Revision-Date:  \n"
 "Last-Translator:  \n"
 "Language-Team: BEdita I18N & I10N Team \n"
@@ -28,6 +28,9 @@ msgstr "Aggiungi traduzione"
 
 msgid "Advanced"
 msgstr "Avanzate"
+
+msgid "Alert!"
+msgstr "Attenzione!"
 
 msgid "All"
 msgstr "Tutti"
@@ -65,7 +68,10 @@ msgstr "Traduci automaticamente tutti i campi"
 msgid "BEdita Web site"
 msgstr "Sito BEdita"
 
-msgid "BEdita {0}"
+msgid "Back to login"
+msgstr "Torna al login"
+
+msgid "Bad related data method"
 msgstr ""
 
 msgid "Bulk Action failed on: "
@@ -100,6 +106,9 @@ msgstr "Clona"
 
 msgid "Close"
 msgstr "Chiudi"
+
+msgid "Concurrent users"
+msgstr "Redattori concorrenti"
 
 msgid "Confirm new password"
 msgstr "Conferma nuova password"
@@ -182,9 +191,6 @@ msgstr "Errore nel caricamento del contenuto richiesto"
 msgid "Events"
 msgstr "Eventi"
 
-msgid "Competition Notices"
-msgstr "Bandi"
-
 msgid "Export"
 msgstr "Esporta"
 
@@ -193,9 +199,6 @@ msgstr "Esporta Tutti"
 
 msgid "Export Filtered"
 msgstr "Esporta Filtrati"
-
-msgid "Format choosen is not available"
-msgstr "Il formato selezionato non è disponibile"
 
 msgid "Failed to write file to disk"
 msgstr "Scrittura file su disco fallita"
@@ -223,6 +226,9 @@ msgstr "Cartelle"
 
 msgid "Forgot your password?"
 msgstr "Hai dimenticato la password?"
+
+msgid "Format choosen is not available"
+msgstr "Il formato selezionato non è disponibile"
 
 msgid "From"
 msgstr "Da"
@@ -269,26 +275,11 @@ msgstr "Lingua"
 msgid "Language and translations"
 msgstr "Lingua e traduzioni"
 
-msgid "Places"
-msgstr "Luoghi"
+msgid "Left types"
+msgstr ""
 
 msgid "Locations"
 msgstr "Posizioni"
-
-msgid "Libraries"
-msgstr "Biblioteche"
-
-msgid "Bibliographies"
-msgstr "Bibliografie"
-
-msgid "Books"
-msgstr "Libri"
-
-msgid "Lecture Groups"
-msgstr "Gruppi di lettura"
-
-msgid "Galleries"
-msgstr "Gallerie"
 
 msgid "Log out"
 msgstr "Esci"
@@ -298,9 +289,6 @@ msgstr "Accedi"
 
 msgid "Login required"
 msgstr "È richiesto il login"
-
-msgid "Back to login"
-msgstr "Torna al login"
 
 msgid "Long Lat Coordinates"
 msgstr ""
@@ -407,9 +395,6 @@ msgstr "Opzioni"
 msgid "Other"
 msgstr "Altro"
 
-msgid "Password"
-msgstr ""
-
 msgid "Password reset"
 msgstr "Reimposta password"
 
@@ -429,6 +414,9 @@ msgid "Please provide a Mapbox access token in app configuration"
 msgstr ""
 "Per visualizzare la mappa è necessario inserire un token di accesso a Mapbox "
 "in configurazione"
+
+msgid "Position"
+msgstr ""
 
 msgid "Preferences and Tools"
 msgstr "Preferenze e Strumenti"
@@ -484,17 +472,20 @@ msgstr "Risultato"
 msgid "Retype password"
 msgstr "Ridigita password"
 
+msgid "Right types"
+msgstr ""
+
 msgid "Save"
 msgstr "Salva"
 
 msgid "Search"
 msgstr "Cerca"
 
+msgid "Select a project"
+msgstr ""
+
 msgid "Set selected"
 msgstr "Applica a selezione"
-
-msgid "Settings"
-msgstr "Impostazioni"
 
 msgid "Sign in"
 msgstr "Accedi"
@@ -590,9 +581,6 @@ msgstr "Profilo Utente"
 msgid "User profile saved"
 msgstr "Profilo utente salvato"
 
-msgid "Username"
-msgstr "Nome utente"
-
 msgid "Users"
 msgstr "Utenti"
 
@@ -617,11 +605,11 @@ msgstr "Hai richiesto una modifica della password, fornisci una nuova password"
 msgid "Your recent items"
 msgstr "I tuoi elementi più recenti"
 
+msgid "add"
+msgstr ""
+
 msgid "add objects"
 msgstr "aggiungi oggetti"
-
-msgid "add to"
-msgstr "aggiungi a"
 
 msgid "cancel"
 msgstr "annulla"
@@ -644,6 +632,9 @@ msgstr "crea nuovo"
 msgid "current password"
 msgstr "password corrente"
 
+msgid "elements to"
+msgstr ""
+
 msgid "empty"
 msgstr "vuoto"
 
@@ -651,9 +642,6 @@ msgid "file name"
 msgstr "nome del file"
 
 msgid "id"
-msgstr ""
-
-msgid "language"
 msgstr ""
 
 msgid "modified"
@@ -670,6 +658,9 @@ msgstr "oggetti a"
 
 msgid "original"
 msgstr "originale"
+
+msgid "related object"
+msgstr ""
 
 msgid "remove"
 msgstr "rimuovi"
@@ -713,63 +704,97 @@ msgstr "attenzione"
 msgid "www.bedita.com"
 msgstr ""
 
-#: src/Template/Layout/js/app/app.js:158
-#: src/Template/Layout/js/app/components/history/history.js:90
+#: src/Template/Layout/js/app/app.js:157
+#: src/Template/Layout/js/app/components/history/history.js:99
 #, javascript-format
 msgid "Please insert a new title on \"${ title }\" clone"
 msgstr "Inserisci un nuovo titolo per la copia di \"${ title }\""
 
-#: src/Template/Layout/js/app/app.js:159
-#: src/Template/Layout/js/app/components/history/history.js:91
+#: src/Template/Layout/js/app/app.js:158
+#: src/Template/Layout/js/app/components/history/history.js:100
 msgid "copy"
 msgstr "copia"
 
-#: src/Template/Layout/js/app/app.js:481
+#: src/Template/Layout/js/app/app.js:477
 msgid "If you confirm, this data will be gone forever. Are you sure?"
 msgstr "Questo dato verrà eliminato definitivamente. Vuoi proseguire?"
 
-#: src/Template/Layout/js/app/app.js:483
+#: src/Template/Layout/js/app/app.js:479
 msgid "Do you really want to trash the object?"
 msgstr "Vuoi davvero spostare l'oggetto nel cestino?"
 
-#: src/Template/Layout/js/app/app.js:492
-#: src/Template/Layout/js/app/components/history/history.js:82
-#: src/Template/Layout/js/app/pages/model/index.js:263
+#: src/Template/Layout/js/app/app.js:487
+#: src/Template/Layout/js/app/components/history/history.js:89
+#: src/Template/Layout/js/app/pages/model/index.js:262
 #: src/Template/Layout/js/app/pages/modules/index.js:144
-#: src/Template/Layout/js/app/pages/trash/index.js:42
+#: src/Template/Layout/js/app/pages/trash/index.js:43
 msgid "yes, proceed"
 msgstr "sì, prosegui"
 
-#: src/Template/Layout/js/app/app.js:501
+#: src/Template/Layout/js/app/app.js:496
 msgid "There are unsaved changes, are you sure you want to leave page?"
 msgstr "Ci sono delle modifiche non salvate, vuoi comunque lasciare la pagina?"
 
-#: src/Template/Layout/js/app/pages/trash/index.js:39
+#: src/Template/Layout/js/app/pages/trash/index.js:42
 #, javascript-format
 msgid "Do you confirm the deletion of ${ number } item from the trash?"
 msgstr "Confermi la cancellazione di ${ number } elementi dal cestino?"
 
-#: src/Template/Layout/js/app/pages/modules/index.js:141
+#: src/Template/Layout/js/app/pages/modules/index.js:142
 #, javascript-format
 msgid "Moving ${ number } item(s) to trash. Are you sure?"
 msgstr "Stai per spostare ${ number } elementi nel cestino. Vuoi procedere?"
 
-#: src/Template/Layout/js/app/pages/model/index.js:261
+#: src/Template/Layout/js/app/pages/model/index.js:262
 #, javascript-format
 msgid "Do you really want to trash these property types? ${ types }"
 msgstr "Vuoi davvero cancellare questi tipi di proprietà? ${ types }"
 
-#: src/Template/Layout/js/app/components/relation-view/relations-add.js:263
+#: src/Template/Layout/js/app/components/filter-box.js:214
+msgid "Search text too short. Minimum length is 3. Retry"
+msgstr ""
+
+#: src/Template/Layout/js/app/components/relation-view/relations-add.js:262
 msgid "Error while creating new object."
 msgstr "Si è verificato un errore durante la creazione del nuovo oggetto."
 
-#: src/Template/Layout/js/app/components/history/history.js:79
+#: src/Template/Layout/js/app/components/history/history.js:88
 msgid ""
 "Restored data will replace current data (you can still check the data before "
 "saving). Are you sure?"
 msgstr ""
 "I dati recuperati sostiruiranno quelli attuali (potrai comunque controllarli "
 "prima di salvare). Vuoi procedere?"
+
+#~ msgid "Competition Notices"
+#~ msgstr "Bandi"
+
+#~ msgid "Places"
+#~ msgstr "Luoghi"
+
+#~ msgid "Libraries"
+#~ msgstr "Biblioteche"
+
+#~ msgid "Bibliographies"
+#~ msgstr "Bibliografie"
+
+#~ msgid "Books"
+#~ msgstr "Libri"
+
+#~ msgid "Lecture Groups"
+#~ msgstr "Gruppi di lettura"
+
+#~ msgid "Galleries"
+#~ msgstr "Gallerie"
+
+#~ msgid "Settings"
+#~ msgstr "Impostazioni"
+
+#~ msgid "Username"
+#~ msgstr "Nome utente"
+
+#~ msgid "add to"
+#~ msgstr "aggiungi a"
 
 #~ msgid "Coordinates"
 #~ msgstr "Coordinate"

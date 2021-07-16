@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BEdita 4 \n"
-"POT-Creation-Date: 2021-01-21 16:33:19 \n"
+"POT-Creation-Date: 2021-07-16 07:10:30 \n"
 "MIME-Version: 1.0 \n"
 "Content-Transfer-Encoding: 8bit \n"
 "Language-Team: BEdita I18N & I10N Team \n"
@@ -24,6 +24,9 @@ msgid "Add translation"
 msgstr ""
 
 msgid "Advanced"
+msgstr ""
+
+msgid "Alert!"
 msgstr ""
 
 msgid "All"
@@ -62,7 +65,10 @@ msgstr ""
 msgid "BEdita Web site"
 msgstr ""
 
-msgid "BEdita {0}"
+msgid "Back to login"
+msgstr ""
+
+msgid "Bad related data method"
 msgstr ""
 
 msgid "Bulk Action failed on: "
@@ -96,6 +102,9 @@ msgid "Clone"
 msgstr ""
 
 msgid "Close"
+msgstr ""
+
+msgid "Concurrent users"
 msgstr ""
 
 msgid "Confirm new password"
@@ -188,9 +197,6 @@ msgstr ""
 msgid "Export Filtered"
 msgstr ""
 
-msgid "Format choosen is not available"
-msgstr ""
-
 msgid "Failed to write file to disk"
 msgstr ""
 
@@ -216,6 +222,9 @@ msgid "Folders"
 msgstr ""
 
 msgid "Forgot your password?"
+msgstr ""
+
+msgid "Format choosen is not available"
 msgstr ""
 
 msgid "From"
@@ -261,6 +270,9 @@ msgid "Language"
 msgstr ""
 
 msgid "Language and translations"
+msgstr ""
+
+msgid "Left types"
 msgstr ""
 
 msgid "Locations"
@@ -380,9 +392,6 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-msgid "Password"
-msgstr ""
-
 msgid "Password reset"
 msgstr ""
 
@@ -399,6 +408,9 @@ msgid "Please check your mailbox and follow the instructions"
 msgstr ""
 
 msgid "Please provide a Mapbox access token in app configuration"
+msgstr ""
+
+msgid "Position"
 msgstr ""
 
 msgid "Preferences and Tools"
@@ -431,7 +443,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-msgid "Request password reset"
+msgid "Request password"
 msgstr ""
 
 msgid "Reset filters"
@@ -455,16 +467,19 @@ msgstr ""
 msgid "Retype password"
 msgstr ""
 
+msgid "Right types"
+msgstr ""
+
 msgid "Save"
 msgstr ""
 
 msgid "Search"
 msgstr ""
 
-msgid "Set selected"
+msgid "Select a project"
 msgstr ""
 
-msgid "Settings"
+msgid "Set selected"
 msgstr ""
 
 msgid "Sign in"
@@ -560,9 +575,6 @@ msgstr ""
 msgid "User profile saved"
 msgstr ""
 
-msgid "Username"
-msgstr ""
-
 msgid "Users"
 msgstr ""
 
@@ -587,10 +599,10 @@ msgstr ""
 msgid "Your recent items"
 msgstr ""
 
-msgid "add objects"
+msgid "add"
 msgstr ""
 
-msgid "add to"
+msgid "add objects"
 msgstr ""
 
 msgid "cancel"
@@ -614,6 +626,9 @@ msgstr ""
 msgid "current password"
 msgstr ""
 
+msgid "elements to"
+msgstr ""
+
 msgid "empty"
 msgstr ""
 
@@ -621,9 +636,6 @@ msgid "file name"
 msgstr ""
 
 msgid "id"
-msgstr ""
-
-msgid "language"
 msgstr ""
 
 msgid "modified"
@@ -639,6 +651,9 @@ msgid "objects to"
 msgstr ""
 
 msgid "original"
+msgstr ""
+
+msgid "related object"
 msgstr ""
 
 msgid "remove"
@@ -683,57 +698,61 @@ msgstr ""
 msgid "www.bedita.com"
 msgstr ""
 
-#: src/Template/Layout/js/app/app.js:158
-#: src/Template/Layout/js/app/components/history/history.js:90
+#: src/Template/Layout/js/app/app.js:157
+#: src/Template/Layout/js/app/components/history/history.js:99
 #, javascript-format
 msgid "Please insert a new title on \"${ title }\" clone"
 msgstr ""
 
-#: src/Template/Layout/js/app/app.js:159
-#: src/Template/Layout/js/app/components/history/history.js:91
+#: src/Template/Layout/js/app/app.js:158
+#: src/Template/Layout/js/app/components/history/history.js:100
 msgid "copy"
 msgstr ""
 
-#: src/Template/Layout/js/app/app.js:481
+#: src/Template/Layout/js/app/app.js:477
 msgid "If you confirm, this data will be gone forever. Are you sure?"
 msgstr ""
 
-#: src/Template/Layout/js/app/app.js:483
+#: src/Template/Layout/js/app/app.js:479
 msgid "Do you really want to trash the object?"
 msgstr ""
 
-#: src/Template/Layout/js/app/app.js:492
-#: src/Template/Layout/js/app/components/history/history.js:82
-#: src/Template/Layout/js/app/pages/model/index.js:263
+#: src/Template/Layout/js/app/app.js:487
+#: src/Template/Layout/js/app/components/history/history.js:89
+#: src/Template/Layout/js/app/pages/model/index.js:262
 #: src/Template/Layout/js/app/pages/modules/index.js:144
-#: src/Template/Layout/js/app/pages/trash/index.js:42
+#: src/Template/Layout/js/app/pages/trash/index.js:43
 msgid "yes, proceed"
 msgstr ""
 
-#: src/Template/Layout/js/app/app.js:501
+#: src/Template/Layout/js/app/app.js:496
 msgid "There are unsaved changes, are you sure you want to leave page?"
 msgstr ""
 
-#: src/Template/Layout/js/app/pages/trash/index.js:39
+#: src/Template/Layout/js/app/pages/trash/index.js:42
 #, javascript-format
 msgid "Do you confirm the deletion of ${ number } item from the trash?"
 msgstr ""
 
-#: src/Template/Layout/js/app/pages/modules/index.js:141
+#: src/Template/Layout/js/app/pages/modules/index.js:142
 #, javascript-format
 msgid "Moving ${ number } item(s) to trash. Are you sure?"
 msgstr ""
 
-#: src/Template/Layout/js/app/pages/model/index.js:261
+#: src/Template/Layout/js/app/pages/model/index.js:262
 #, javascript-format
 msgid "Do you really want to trash these property types? ${ types }"
 msgstr ""
 
-#: src/Template/Layout/js/app/components/relation-view/relations-add.js:263
+#: src/Template/Layout/js/app/components/filter-box.js:214
+msgid "Search text too short. Minimum length is 3. Retry"
+msgstr ""
+
+#: src/Template/Layout/js/app/components/relation-view/relations-add.js:262
 msgid "Error while creating new object."
 msgstr ""
 
-#: src/Template/Layout/js/app/components/history/history.js:79
+#: src/Template/Layout/js/app/components/history/history.js:88
 msgid ""
 "Restored data will replace current data (you can still check the data before "
 "saving). Are you sure?"

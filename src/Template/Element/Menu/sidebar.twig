@@ -11,11 +11,21 @@
         <div class="sidebar-module-commands">
 
         {% if not Layout.isDashboard() %}
-            <div class="module-box">
+            {% set editors = Editors.list() %}
+            <div class="module-box{% if editors|length > 1 %}-concurrent-editors{% endif %}">
                 {{ Layout.moduleLink()|raw }}
             </div>
+            {% if editors|length > 1 %}
+            <ul class="concurrent-editors">
+                <strong>{{ __('Alert!') }}</strong>
+                <span>{{ __('Concurrent users') }}:</span>
+                {% for editor in editors %}
+                    <li>{{ editor.name }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         {% endif %}
-        
+
             <div class="module-buttons">
                 {{ _view.fetch('module-buttons')|raw }}
                 {% if currentModule.hints.multiple_types and types.right is iterable %}
@@ -31,7 +41,7 @@
 
 
     <div class="sidebar-body">
-        
+
         {% if I18n.getLanguages|length > 1 %}
             <div>
                 <p class="has-text-size-smaller">

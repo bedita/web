@@ -24,6 +24,7 @@ use Psr\Log\LogLevel;
  * Modules controller: list, add, edit, remove objects
  *
  * @property \App\Controller\Component\HistoryComponent $History
+ * @property \App\Controller\Component\ObjectsEditorsComponent $ObjectsEditors
  * @property \App\Controller\Component\ProjectConfigurationComponent $ProjectConfiguration
  * @property \App\Controller\Component\PropertiesComponent $Properties
  * @property \App\Controller\Component\QueryComponent $Query
@@ -47,6 +48,7 @@ class ModulesController extends AppController
         parent::initialize();
 
         $this->loadComponent('History');
+        $this->loadComponent('ObjectsEditors');
         $this->loadComponent('Properties');
         $this->loadComponent('ProjectConfiguration');
         $this->loadComponent('Query');
@@ -173,6 +175,8 @@ class ModulesController extends AppController
         // set objectNav
         $objectNav = $this->getObjectNav((string)$id);
         $this->set('objectNav', $objectNav);
+
+        $this->ObjectsEditors->update((string)$id);
 
         return null;
     }

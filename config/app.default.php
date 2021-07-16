@@ -756,4 +756,12 @@ return [
     //         ],
     //     ],
     // ],
+
+    /**
+     * Editors configuration.
+     * concurrentCheckTime: the time in milliseconds that a concurrent access is considered still active
+     */
+    // 'Editors' => [
+    //     'concurrentCheckTime' => 30000, // 30 seconds
+    // ],
 ];
